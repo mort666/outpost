@@ -41,14 +41,14 @@ module Outpost
       # body and time.
       def execute
         previous_time = Time.now     
-        http = Net::HTTP.new
+        http = Net::HTTP.new(@host, @port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE    
         
         if @request_head
-          response = http.request_head(@host, @path, @port)
+          response = http.request_head(@path)
         else
-          response = http.get_response(@host, @path, @port)
+          response = http.request_get(@path)
         end
 
         @response_time = (Time.now - previous_time) * 1000 # Miliseconds
